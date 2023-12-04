@@ -17,7 +17,6 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
 }
 
 .item-container {
@@ -30,6 +29,17 @@ body {
 
 .item {
     text-align: center;
+    position: relative;
+}
+
+.text{
+    position: absolute;
+    width: 100%;
+    bottom: 5px;
+    color: white;
+    text-align: start;
+    padding: 10px;
+    background-color: black;
 }
 
 .item img {
@@ -55,3 +65,4 @@ body {
     cursor: pointer;
     position: absolute;
 }
+

@@ -1,5 +1,5 @@
 // dichiaro le costanti
-const items = document.querySelectorAll(".item");
+const containerInner = document.querySelector(".item-container-inner");
 
 
 // prendo in considerazione il bottone next e prev
@@ -41,14 +41,32 @@ const images = [
 
 
 
-// Popolo gli elementi del carousel con le informazioni dalle immagini
-items.forEach((item, i) => {
-    item.innerHTML = 
-    ` 
-        <img src="${images[i].image}">
-        <h2>${images[i].title}</h2>
-        <p>${images[i].text}</p>
+// popolo gli elementi del carousel con le informazioni dalle immagini
+images.forEach((image, i) => {
+
+    //creo l'elemento div
+    const item = document.createElement("div");
+
+    //ci aggiungo la classe item
+    item.classList.add("item");
+
+    //creo img,h2 e p che poi appendo nel container
+    item.innerHTML = `
+        <img src="${image.image}">
+        <div class="text">
+            <h2>${image.title}</h2>
+            <p>${image.text}</p>
+        </div>
     `;
+
+    containerInner.appendChild(item);
+
+    //qui ho dovuto creare rispetto al primo esercizio array, una condizione dove SE l'indice i è = a 0 (ovvero la prima img) aggiungerà la classe active, ALTRIMENTI tutte le restanti img l'hidden
+    if (i === 0) {
+        item.classList.add("active");
+    } else {
+        item.classList.add("hidden");
+    }
 });
 
 
@@ -57,32 +75,27 @@ items.forEach((item, i) => {
 // imposto l'indice da dover partire
 let activeItem = 0;
 
-const totalItems = items.length;
+// funzione generica per gestire next e prev
+function buttonPrevNextGen(direzione) {
+
+    // tolgo la classe active
+    containerInner.children[activeItem].classList.remove("active");
+    containerInner.children[activeItem].classList.add("hidden");
+
+    // aggiorno l'indice dell'elemento con modulo per il ciclo infinito
+    activeItem = (activeItem + direzione + images.length) % images.length;
+
+    // aggiungo la classe active all'elemento corrente
+    containerInner.children[activeItem].classList.add("active");
+    containerInner.children[activeItem].classList.remove("hidden");
+}
 
 // al click del bottone "next"
-next.addEventListener("click", function () {
-    //togliamo la classe active
-    items[activeItem].classList.remove("active");
-    items[activeItem].classList.add("hidden");
-
-    // incremento dell'indice dell'elemento con modulo per il ciclo infinito
-    activeItem = (activeItem + 1) % totalItems;
-
-    //aggiungiamo la classe active all'elemento successivo
-    items[activeItem].classList.add("active");
-    items[activeItem].classList.remove("hidden");
+next.addEventListener("click", () =>  {
+    buttonPrevNextGen(1);
 });
 
 // al click del bottone "prev"
-prev.addEventListener("click", function () {
-    //togliamo la classe active
-    items[activeItem].classList.remove("active");
-    items[activeItem].classList.add("hidden");
-
-    // decremento dell'indice dell'elemento con modulo per il ciclo infinito
-    activeItem = (activeItem - 1 + totalItems) % totalItems;
-
-    //aggiungiamo la classe active all'elemento precedente
-    items[activeItem].classList.add("active");
-    items[activeItem].classList.remove("hidden");
+prev.addEventListener("click", () => {
+    buttonPrevNextGen(-1);
 });
