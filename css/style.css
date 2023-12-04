@@ -1,0 +1,57 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.active {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.item-container {
+    width: 890px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.item {
+    text-align: center;
+}
+
+.item img {
+    width: 100%;
+    height: 334px;
+    object-fit: cover;
+    position: relative;
+}
+
+.next {
+    right: 10px;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next,
+.prev {
+    background-color: wheat;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: absolute;
+}
